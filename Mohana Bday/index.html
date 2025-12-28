@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Tribute to Mohana ✨</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Playfair+Display:ital,wght@0,400;1,500&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --champagne: #f7e7ce;
+            --liquid-gold: linear-gradient(135deg, #cfb53b 0%, #f7e7ce 50%, #ae8625 100%);
+            --deep-plum: #0d0202;
+            --ivory: #fffdfa;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--deep-plum);
+            color: var(--ivory);
+            font-family: 'Playfair Display', serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #luxury-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #1e0a0a 0%, #0d0202 100%);
+            z-index: -1;
+        }
+
+        .shimmer-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png');
+            opacity: 0.12; pointer-events: none;
+        }
+
+        .stage {
+            width: 100%;
+            max-width: 900px;
+            text-align: center;
+            z-index: 10;
+            padding: 40px 20px;
+        }
+
+        /* Screen Transitions */
+        #intro-screen { animation: fadeIn 2.5s ease; }
+
+        .gold-seal {
+            width: 70px; height: 70px;
+            border: 1px solid var(--champagne);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--champagne);
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.2rem;
+            box-shadow: 0 0 30px rgba(247, 231, 206, 0.15);
+        }
+
+        #experience-screen { display: none; position: relative; min-height: 300px; }
+
+        .quote-line {
+            font-size: clamp(1.4rem, 5vw, 2.2rem);
+            font-style: italic;
+            opacity: 0;
+            transform: scale(1.05);
+            filter: blur(8px);
+            transition: all 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: absolute;
+            left: 0; right: 0; top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            line-height: 1.4;
+        }
+
+        .quote-line.active { opacity: 1; transform: translateY(-50%) scale(1); filter: blur(0); }
+        .quote-line.exit { opacity: 0; transform: translateY(-50%) scale(0.95); filter: blur(12px); }
+
+        .gold-highlight {
+            font-family: 'Cinzel Decorative', serif;
+            background: var(--liquid-gold);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+            display: block;
+            margin-top: 15px;
+            letter-spacing: 1px;
+            font-style: normal;
+	    font-kerning: normal;
+	    text-rendering: optimizeLegibility;
+        }
+
+        /* Grand Reveal */
+        #final-reveal {
+            opacity: 0;
+            transition: opacity 3s ease;
+            transform: translateY(20px);
+        }
+        #final-reveal.show { opacity: 1; transform: translateY(0); }
+
+        .grand-title {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: clamp(2.5rem, 10vw, 4.5rem);
+            background: var(--liquid-gold);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            letter-spacing: 8px;
+        }
+
+        .ck-signature {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 10px;
+            text-transform: uppercase;
+            color: var(--champagne);
+            margin-top: 40px;
+            opacity: 0.6;
+        }
+
+        /* The Proof of Effort (The "Human" Note) */
+        .dev-credit {
+            position: fixed; bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: rgba(247, 231, 206, 0.3);
+            z-index: 100;
+            transition: opacity 2s ease;
+            opacity: 0;
+        }
+
+        /* Buttons */
+        .btn-start {
+            background: none;
+            border: 0.5px solid rgba(247, 231, 206, 0.5);
+            padding: 18px 50px;
+            color: var(--champagne);
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: 0.6s;
+        }
+        .btn-start:hover { background: var(--champagne); color: #000; letter-spacing: 8px; }
+
+        .audio-toggle { position: fixed; bottom: 20px; right: 20px; color: var(--champagne); opacity: 0.2; cursor: pointer; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <div id="luxury-bg"></div>
+    <div class="shimmer-overlay"></div>
+    
+    <audio id="bgMusic"><source src="song.mp3" type="audio/mpeg"></audio>
+
+    <div class="stage">
+        <div id="intro-screen">
+            <div class="gold-seal">M</div>
+            <h2 style="font-weight: 200; letter-spacing: 12px; margin-bottom: 50px; font-size: 0.75rem; text-transform: uppercase; opacity: 0.8;">A Sincere Digital Wish</h2>
+            <button class="btn-start" onclick="beginTimeline()">Enter Experience</button>
+        </div>
+
+        <div id="experience-screen">
+            <div class="quote-line" id="line1">Happy Birthday, Mohana.</div>
+            <div class="quote-line" id="line2">May your year be filled with <br><span class="gold-highlight">Peace and Clarity</span></div>
+            <div class="quote-line" id="line3">I genuinely wish to see you <br>achieve your dreams.</div>
+            <div class="quote-line" id="line4">May your path always be <br><span class="gold-highlight">Kind to You</span></div>
+            <div class="quote-line" id="line5">Celebrate your day <br><span class="gold-highlight">To the Fullest</span></div>
+            
+            <div id="final-reveal">
+                <h1 class="grand-title">MOHANA</h1>
+                <p style="font-style: italic; opacity: 0.7; font-weight: 200; letter-spacing: 1px;">Respectfully wishing you a wonderful year ahead.</p>
+                <div class="ck-signature">— CK —</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dev-credit" id="credit">Crafted with HTML5 • CSS3 • JavaScript by CK</div>
+
+    <div class="audio-toggle" onclick="toggleMute()"><i class="fas fa-music"></i></div>
+
+    <script>
+        const music = document.getElementById('bgMusic');
+
+        function beginTimeline() {
+            document.getElementById('intro-screen').style.display = 'none';
+            document.getElementById('experience-screen').style.display = 'block';
+            
+            music.volume = 0.7;
+            music.play();
+
+            // PRECISE 24-SECOND SYNC
+            sequenceLine('line1', 0, 3000);
+            sequenceLine('line2', 3800, 6800);
+            sequenceLine('line3', 7600, 10600);
+            sequenceLine('line4', 11400, 14400);
+            sequenceLine('line5', 15200, 18500);
+
+            setTimeout(() => {
+                document.getElementById('final-reveal').classList.add('show');
+                document.getElementById('credit').style.opacity = '1';
+                document.body.style.transition = "background 5s ease";
+                document.body.style.background = "#000";
+            }, 19500);
+        }
+
+        function sequenceLine(id, start, end) {
+            const el = document.getElementById(id);
+            setTimeout(() => el.classList.add('active'), start);
+            setTimeout(() => {
+                el.classList.remove('active');
+                el.classList.add('exit');
+            }, end);
+        }
+
+        function toggleMute() { music.muted = !music.muted; }
+    </script>
+</body>
+</html>
